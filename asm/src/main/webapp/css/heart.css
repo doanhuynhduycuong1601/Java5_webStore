@@ -1,0 +1,36 @@
+.heart-btn {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.heart-checkbox {
+  display: none;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.heart-icon.white {
+  z-index: 1;
+  background-color: #343a40;
+}
+
+.heart-icon.red {
+  z-index: 0;
+}
+
+.heart-checkbox:checked + .heart-icon.white {
+  display: none;
+}
+
+.heart-checkbox:checked + .heart-icon.red {
+  display: block;
+}

@@ -1,0 +1,21 @@
+.convenient-bar .right li>button:hover {
+	color: black;
+}
+
+.convenient-bar .right li>button:focus {
+	color: black;
+}
+
+
+.convenient-bar .below li {
+	margin-left: 45px;
+}
+
+.card {
+	border: 2px solid white;
+}
+
+
+.btn-hover:hover {
+	background-color: black;
+}
