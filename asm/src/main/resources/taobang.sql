@@ -89,7 +89,7 @@ BEGIN
 	where id = (SELECT PRODUCT_ID FROM inserted)
 END
 
-
+go
 drop trigger IF EXISTS Update_Product_Where_Quantity_Bigger_Zero
 GO
 CREATE TRIGGER Update_Product_Where_Quantity_Bigger_Zero ON Product after UPDATE
@@ -101,6 +101,7 @@ BEGIN
 		end
 END
 
+go
 drop trigger IF EXISTS Update_Product_When_Remove_OrderItems
 GO
 CREATE TRIGGER Update_Product_When_Remove_OrderItems ON ORDERITEMS after UPDATE
@@ -123,7 +124,7 @@ BEGIN
 	end
 END
 
-
+go
 drop trigger IF EXISTS Update_Product_When_Update_ItemReturn_OrderItems
 GO
 CREATE TRIGGER Update_Product_When_Update_ItemReturn_OrderItems ON ORDERITEMS after UPDATE
@@ -137,6 +138,7 @@ BEGIN
 	end
 END
 
+go
 drop trigger IF EXISTS Update_Product_When_Giam_Quantity_OrderItems
 GO
 CREATE TRIGGER Update_Product_When_Giam_Quantity_OrderItems ON ORDERITEMS after UPDATE
@@ -158,6 +160,7 @@ BEGIN
 
 END
 
+go
 drop trigger IF EXISTS Update_Product_When_Update_Order
 go
 CREATE TRIGGER Update_Product_When_Update_Order on Orders after update
@@ -216,3 +219,4 @@ values
 (N'6-1000 K',N'600000.0,1000000.0',4),
 (N'Trên 1 triệu',N'1000000.0,100000000.0',4)
 
+select * from ORDERITEMS where ORDER_ITEM_ID = 24621

@@ -8,10 +8,9 @@
 	<a class="btn btn-primary" href="/store/history/order">Đơn hàng đã
 		đặt</a> <a class="btn btn-primary" href="/store/history/order/cancel">Đơn
 		hàng bị hủy</a> <a class="btn btn-primary"
-		href="/store/history/order/confirm">Đơn hàng đã xác nhận</a>
-		<a class="btn btn-primary"
-		href="/store/history/order/ship">Đơn hàng đang giao</a>
-		<a class="btn btn-primary"
+		href="/store/history/order/confirm">Đơn hàng đã xác nhận</a> <a
+		class="btn btn-primary" href="/store/history/order/ship">Đơn hàng
+		đang giao</a> <a class="btn btn-primary"
 		href="/store/history/order/success">Đơn hàng hoàn thành</a>
 </div>
 
@@ -27,26 +26,24 @@
 				<div class="row mb-4" id="order${list.orderId}">
 					<div class="col-8 row">
 						<label class="col-2">${list.orderId}</label> <label class="col-5">${list.dateAt}</label>
-						<label class="col-5">${list.totalAmount}</label>
-						<label class="row mb-2">Email : ${list.email}</label>
-						<label class="row mb-2">Điện thoại : ${list.phone}</label>
-						<label class="row mb-1">Địa chỉ : ${list.address}</label>
+						<label class="col-5">${list.totalAmount}</label> <label
+							class="row mb-2">Email : ${list.email}</label> <label
+							class="row mb-2">Điện thoại : ${list.phone}</label> <label
+							class="row mb-1">Địa chỉ : ${list.address}</label>
 					</div>
-					<c:if test="${order != null}">
-						<div class="col-1">
+
+					<div class="col-4">
+						<c:if test="${order != null}">
 							<a class="btn btn-primary"
 								href="/store/history/cancel/${list.orderId}">Hủy</a>
-						</div>
-					</c:if>
-						<div class="col-2">
-							<button class="btn btn-primary" type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#showStatus${list.orderId}" aria-expanded="false"
-								aria-controls="showStatus${list.orderId}"
-								onclick="status('${list.orderId}','showStatus${list.orderId}','/store/history/order/status')">
-								Tình trạng</button>
-						</div>
-					<div class="col-2">
+						</c:if>
+						
+						<button class="btn btn-primary" type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#showStatus${list.orderId}" aria-expanded="false"
+							aria-controls="showStatus${list.orderId}"
+							onclick="status('${list.orderId}','showStatus${list.orderId}','/store/history/order/status')">
+							Tình trạng</button>
 						<button class="btn btn-primary" type="button"
 							data-bs-toggle="collapse" data-bs-target="#show${list.orderId}"
 							aria-expanded="false" aria-controls="show${list.orderId}"
@@ -71,7 +68,7 @@
 			<c:if test="${orderCancel != null}">
 				<h2>Bạn không có đơn hàng nào bị hủy cả</h2>
 			</c:if>
-			
+
 			<c:if test="${orderCancel == null && order == null}">
 				<h2>Bạn chưa có đơn hàng nào hoàn thành cả</h2>
 			</c:if>

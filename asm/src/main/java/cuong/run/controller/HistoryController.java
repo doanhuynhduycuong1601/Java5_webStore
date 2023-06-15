@@ -127,10 +127,13 @@ public class HistoryController {
 	@GetMapping("/hoan/{id}")
 	public String hoan(@PathVariable("id") Integer id) {
 		String reason = param.getString("reason", "");
+		System.out.println(id);
 		OrdersItems item = orderItemsRepository.findById(id).get();
 		item.setITemReturn(2);
+		int id_Order = item.getOrder().getOrderID();
 		orderItemsRepository.save(item);
-		Orders orders = orderRepository.findById(item.getOrder().getOrderID()).get();
+		System.out.println(id_Order);
+		Orders orders = orderRepository.findById(id_Order).get();
 		String msg = String
 				.format("Khách hàng yêu cầu hoàn trả sản phẩm %s. Lý do : %s",item.getProduct().getNames(),reason);
 		orders.getUpdateStatus().add(updateStatus(orders, msg));

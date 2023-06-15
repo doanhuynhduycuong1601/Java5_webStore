@@ -37,7 +37,7 @@ public class AddDatabase {
 		addProducts();
 		addCustomer();
 		addOrder();
-		updateOrder(1, 4500);
+		updateOrder(1, 2500);
 		
 	}
 	
@@ -117,8 +117,8 @@ public class AddDatabase {
 		Random random = new Random();
 		LocalDate date = LocalDate.of(2018, 1, 1);
 		LocalDateTime datetime =  LocalDateTime.of(date, LocalTime.now());
-		for (int i = 1; i <= 4500; i++) {
-			int idCustomer = random.nextInt(42)+1;
+		for (int i = 1; i <= 2500; i++) {
+			int idCustomer = random.nextInt(32)+1;
 			Customer customer = customerRepository.findById(idCustomer).get();
 			Orders orders = new Orders();
 			orders.setCustomerID(customer);
@@ -180,7 +180,7 @@ public class AddDatabase {
 		admin.setAdmins(true);
 		customerRepository.save(admin);
 		
-		for(int i=3;i<=42;i++) {
+		for(int i=3;i<=32;i++) {
 			//1,2,3 là khách hàng
 			int admins = random.nextInt(4)+1;
 			Object []array = this.customer(i, admins);
