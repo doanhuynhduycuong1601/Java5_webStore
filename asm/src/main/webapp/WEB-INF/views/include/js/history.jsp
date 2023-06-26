@@ -7,7 +7,7 @@
   function detailOrder(id,div) {
 	  var params = new URLSearchParams();
 	  params.append('id', id);
-	  fetch('/store/history/order/detail', {
+	  fetch('/store/api/product/order/detail', {
 		    method: 'POST', // Phương thức yêu cầu
 		    headers: {
 		    	'Content-Type': 'application/x-www-form-urlencoded'
@@ -56,7 +56,7 @@
   function detailOrderSuccess(id,div) {
 	  var params = new URLSearchParams();
 	  params.append('id', id);
-	  fetch('/store/history/order/detail', {
+	  fetch('/store/api/product/order/detail', {
 		    method: 'POST', // Phương thức yêu cầu
 		    headers: {
 		    	'Content-Type': 'application/x-www-form-urlencoded'
@@ -118,7 +118,7 @@
   function detailOrderSuccessHoan(id,div) {
 	  var params = new URLSearchParams();
 	  params.append('id', id);
-	  fetch('/store/history/order/detail', {
+	  fetch('/store/api/product/order/detail', {
 		    method: 'POST', // Phương thức yêu cầu
 		    headers: {
 		    	'Content-Type': 'application/x-www-form-urlencoded'
@@ -210,8 +210,8 @@
 					  '<div class="col-3">' + data.name + '</div>' +
 					  '<div class="col-2">' + data.price + '</div>' +
 					  '<div class="col-2">' + data.quantity + '</div>' +
-					  '<div class="col-1"><a href="/store/manager/history/hoan/no/'+data.id+'">No</a></div>'+
-					  '<div class="col-1"><a href="/store/manager/history/hoan/yes/'+data.id+'">Yes</a></div>'+
+					  '<div class="col-1"><a href="/store/manager/history/hoan/no/'+data.id+'/'+id+'">No</a></div>'+
+					  '<div class="col-1"><a href="/store/manager/history/hoan/yes/'+data.id+'/'+id+'">Yes</a></div>'+
 					  '</div>';
 			        result += htmlString
 				}
@@ -278,7 +278,7 @@
   function detailOrderManager(id,div) {
 	  var params = new URLSearchParams();
 	  params.append('id', id);
-	  fetch('/store/history/order/detail', {
+	  fetch('/store/api/product/order/detail', {
 		    method: 'POST', // Phương thức yêu cầu
 		    headers: {
 		    	'Content-Type': 'application/x-www-form-urlencoded'
@@ -310,8 +310,8 @@
 					  '</div>' +
 					  '<div class="col-3">' + data.name + '</div>' +
 					  '<div class="col-3">' + data.price + '</div>' +
-					  '<div class="col-2" onclick="giam(this,'+data.id+')">' + data.quantity + '</div>' +
-					  '<div class="col-1"><label onclick="deleteOneItem(this,'+data.id+')" class="btn btn-primary">Xóa</label></div>' +
+					  '<div class="col-2" style="cursor: pointer;color:red;" onclick="giam(this,'+data.id+','+id+')">' + data.quantity + '</div>' +
+					  '<div class="col-1"><label onclick="deleteOneItem(this,'+data.id+','+id+')" class="btn btn-primary">Xóa</label></div>' +
 					  '</div>';
 			        result += htmlString
 				}
@@ -324,9 +324,10 @@
 		});
     }
   
-  function deleteOneItem(label,value) {
+  function deleteOneItem(label,value,idOrder) {
 	  var params = new URLSearchParams();
 	  params.append('id', value);
+	  params.append('idOrder', idOrder);
 	  fetch('/store/manager/history/remove/one/item', {
 		    method: 'POST', // Phương thức yêu cầu
 		    headers: {
@@ -359,10 +360,11 @@
 		});
 	}
   
-  function giam(label,value) {
+  function giam(label,value,idOrder) {
 	  let quantity = window.prompt("Nhập số lượng muốn thay đổi:");
 	  var params = new URLSearchParams();
 	  params.append('id', value);
+	  params.append('idOrder', idOrder);
 	  params.append('quantity', quantity);
 	  fetch('/store/manager/history/giam/one/item', {
 		    method: 'POST', // Phương thức yêu cầu

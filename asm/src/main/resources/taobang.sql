@@ -218,5 +218,3 @@ values
 (N'3-600 K',N'300000.0,600000.0',4),
 (N'6-1000 K',N'600000.0,1000000.0',4),
 (N'Trên 1 triệu',N'1000000.0,100000000.0',4)
-
-select * from ORDERITEMS where ORDER_ITEM_ID = 24621

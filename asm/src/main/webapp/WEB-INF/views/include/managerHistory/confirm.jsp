@@ -38,7 +38,7 @@
 							data-bs-toggle="collapse"
 							data-bs-target="#showStatus${list.orderId}" aria-expanded="false"
 							aria-controls="showStatus${list.orderId}"
-							onclick="status('${list.orderId}','showStatus${list.orderId}','/store/history/order/status')">
+							onclick="status('${list.orderId}','showStatus${list.orderId}','/store/api/product/order/status')">
 							Tình trạng</button>
 						<a class="btn btn-primary"
 							href="/store/manager/history/ship/${list.orderId}">Ship</a>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -113,6 +114,7 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 	}
 	
 	
+	@CacheEvict(cacheNames = "orderStatus", key = "#id")
 	@Override
 	public String confirm(int id) throws MessagingException {
 		Orders orders = orderRepository.findById(id).get();
@@ -123,6 +125,7 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return "redirect:/manager/history/order";
 	}
 	
+	@CacheEvict(cacheNames = "orderStatus", key = "#id")
 	@Override
 	public String orderCancel(int id) {
 		Orders orders = orderRepository.findById(id).get();
@@ -132,6 +135,7 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return "redirect:/manager/history/order";
 	}
 	
+	@CacheEvict(cacheNames = "orderStatus", key = "#id")
 	@Override
 	public String orderShipCancel(int id) {
 		Orders orders = orderRepository.findById(id).get();
@@ -142,6 +146,7 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 	}
 
 	
+	@CacheEvict(cacheNames = "orderStatus", key = "#id")
 	@Override
 	public String ship(int id) {
 		Orders orders = orderRepository.findById(id).get();
@@ -152,6 +157,7 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return "redirect:/manager/history/order/confirm";
 	}
 	
+	@CacheEvict(cacheNames = "orderStatus", key = "#id")
 	@Override
 	public String success(int id) {
 		Orders orders = orderRepository.findById(id).get();
@@ -234,14 +240,15 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return listMonthYearOrderCancel;
 	}
 
+	@CacheEvict(cacheNames = {"orderStatus","orderDetail"}, key = "#idOrder")
 	@Override
-	public String removeOneItem() {
+	public String removeOneItem(int idOrder) {
 		int id = param.getInt("id", 0);
 		try {
 			OrdersItems item = orderItemsRepository.findById(id).get();
 			item.setITemReturn(0);
 			orderItemsRepository.save(item);
-			Orders orders = orderRepository.findById(item.getOrder().getOrderID()).get();
+			Orders orders = orderRepository.findById(idOrder).get();
 			String msg = String.format("Khách hàng yêu cầu hủy sản phẩm %s trong đơn hàng %d", 
 					item.getProduct().getNames(),orders.getOrderID());
 			orders.getUpdateStatus().add(updateStatus(orders, msg));
@@ -252,8 +259,9 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		throw new StringException("Không tìm thấy mã item order : "+id);
 	}
 
+	@CacheEvict(cacheNames = {"orderStatus","orderDetail"}, key = "#idOrder")
 	@Override
-	public String giamOneItem() {
+	public String giamOneItem(int idOrder) {
 		int id = param.getInt("id", 0);
 		
 		int quantityNew = param.getInt("quantity", 0);
@@ -267,18 +275,23 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 			int quantityOld = item.getQuantity();
 			item.setQuantity(quantityNew);
 			orderItemsRepository.save(item);
-			Orders orders = orderRepository.findById(item.getOrder().getOrderID()).get();
-			String msg = String
-					.format("Khách hàng yêu cầu thay đổi số lượng sản phẩm %s từ %d %s %d trong đơn hàng %d",
-							item.getProduct().getNames(),quantityOld,
-							(quantityOld >= quantityNew ? "giảm xuống" : "lên"),
-							quantityNew,orders.getOrderID());
-			orders.getUpdateStatus().add(updateStatus(orders, msg));
-			orderRepository.save(orders);
-			return "Thay đổi số lượng sản phẩm trong item thành công";
+			String name = item.getProduct().getNames();
+			return updateStatus(idOrder, quantityNew, quantityOld,name);
 		}catch(Exception e) {
 		}
 		throw new StringException("Không tìm thấy mã item order : "+id);
+	}
+
+	String updateStatus(int idOrder,int quantityNew,int quantityOld,String name) {
+		Orders orders = orderRepository.findById(idOrder).get();
+		String msg = String
+				.format("Khách hàng yêu cầu thay đổi số lượng sản phẩm %s từ %d %s %d trong đơn hàng %d",
+						name,quantityOld,
+						(quantityOld >= quantityNew ? "giảm xuống" : "lên"),
+						quantityNew,orders.getOrderID());
+		orders.getUpdateStatus().add(updateStatus(orders, msg));
+		orderRepository.save(orders);
+		return "Thay đổi số lượng sản phẩm trong item thành công";
 	}
 	
 	private Page<ThongKeOrderItems> getTK() {
@@ -329,8 +342,9 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return builderOrderToOrderResp.toRespOrderItems(orderItemsRepository.findByStatus(id));
 	}
 
+	@CacheEvict(cacheNames = {"orderDetail","orderStatus"}, key = "#idOrder")
 	@Override
-	public String noHoan(int id) {
+	public String noHoan(int id, int idOrder) {
 		OrdersItems item = orderItemsRepository.findById(id).get();
 		item.setITemReturn(1);
 		orderItemsRepository.save(item);
@@ -341,8 +355,10 @@ public class ManagerHistoryServiceImpl implements ManagerHistoryService {
 		return "redirect:/manager/history/order/hoan";
 	}
 	
+	
+	@CacheEvict(cacheNames = {"orderDetail","orderStatus"}, key = "#idOrder")
 	@Override
-	public String yesHoan(int id) {
+	public String yesHoan(int id, int idOrder) {
 		OrdersItems item = orderItemsRepository.findById(id).get();
 		item.setITemReturn(3);
 		orderItemsRepository.save(item);

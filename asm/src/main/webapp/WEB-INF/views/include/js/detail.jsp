@@ -7,7 +7,7 @@
 function detail(id) {
 	var params = new URLSearchParams();
 	params.append('id', id);
-	fetch('/store/product/detail', {
+	fetch('/store/api/product/detail', {
 	    method: 'POST',
 	    headers: {
 	        'Content-Type': 'application/x-www-form-urlencoded'

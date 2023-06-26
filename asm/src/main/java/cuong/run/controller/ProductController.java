@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import cuong.run.service.InforPageService;
 import cuong.run.service.Param;
 import cuong.run.service.ProductService;
 import cuong.run.service.ShoppingCartService;
-import cuong.run.service.impl.ProductSearchServiceImpl;
+import cuong.run.service.api.APIProductService;
 import cuong.run.service.impl.SearchByCategoryServiceImpl;
-import cuong.run.utils.SortProduct;
 import cuong.run.web.request.ProductSearchRequest;
 import cuong.run.web.request.ReqCart;
 import cuong.run.web.response.CartResponse;
@@ -28,10 +28,11 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("product")
 public class ProductController {
 	final ProductService productService;
-	final ProductSearchServiceImpl productSearchService;
 	final SearchByCategoryServiceImpl searchByCategoryService;
 	final ShoppingCartService shoppingCartService;
 	final Param param;
+	final APIProductService apiProductService;
+	final InforPageService inforPageService;
 	
 	@PostMapping("/addCart")
 	@ResponseBody
@@ -48,36 +49,16 @@ public class ProductController {
 	}
 	
 	
-	@PostMapping("/view/date")
-	@ResponseBody
-	public Page<ProductResponse> viewDate(){
-		int page = param.getInt("page", 1);
-		return productSearchService.home(page, SortProduct.sortDate());
-	}
-	
-	@PostMapping("/view/price")
-	@ResponseBody
-	public Page<ProductResponse> viewPrice(){
-		int page = param.getInt("page", 1);
-		return productSearchService.home(page, SortProduct.sortPrice());
-	}
-	
-	
 	@GetMapping("/search")
 	private String searchView(Model model) {
-		productSearchService.search();
-		model.addAttribute("searchProducts", productSearchService.search(0, SortProduct.sortDate()));
+		inforPageService.setSearch("search");
+		model.addAttribute("searchProducts",
+				apiProductService.getProductSearch(inforPageService.getSearch(),0));
 		model.addAttribute("page", "include/search.jsp");
 		model.addAttribute("myCart", shoppingCartService.getCount());
 		return "index";
 	}
 	
-	@PostMapping("/search")
-	@ResponseBody
-	public Page<ProductResponse> searchViewPage(){
-		int page = param.getInt("page", 1);
-		return productSearchService.search(page, SortProduct.sortDate());
-	}
 	
 	@GetMapping("/search/by/category/{id}")
 	public String searchByCategory(@PathVariable("id") int category, Model model) {
@@ -105,12 +86,5 @@ public class ProductController {
 		return searchByCategoryService.getProductResponses(page);
 	}
 
-	
-	@ResponseBody
-	@PostMapping("/detail")
-	public ProductResponse detail() {
-		return productService.toProductResponse();
-	}
-	
 
 }

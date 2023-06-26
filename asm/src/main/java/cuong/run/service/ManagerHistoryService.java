@@ -39,9 +39,9 @@ public interface ManagerHistoryService {
 
 	public String success(int id);
 
-	public String removeOneItem();
+	public String removeOneItem(int idOrder);
 
-	public String giamOneItem();
+	public String giamOneItem(int idOrder);
 	
 	public List<OrderItemsTKResponse> getTKOrderItemsDetail();
 
@@ -55,7 +55,7 @@ public interface ManagerHistoryService {
 
 	List<OrderItemsDetailResponse> requestHoan();
 	
-	public String noHoan(int id);
+	public String noHoan(int id, int idOrder);
 	
-	public String yesHoan(int id);
+	public String yesHoan(int id, int idOrder);
 }

@@ -41,7 +41,7 @@
 			<div class="col-6 offset-4">
 				<c:if test="${searchProducts.totalPages > 1 }">
 					<button class="btn btn-primary"
-						onclick="xem(1,this,'/store/product/search','pageSearch',3)">Xem
+						onclick="xem(1,this,'/store/api/product/search','pageSearch',3)">Xem
 						thêm</button>
 				</c:if>
 			</div>

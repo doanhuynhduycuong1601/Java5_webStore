@@ -20,6 +20,8 @@ import cuong.run.repository.CategoryRepository;
 import cuong.run.repository.CustomerRepository;
 import cuong.run.repository.OrderRepository;
 import cuong.run.repository.ProductRepository;
+import cuong.run.service.Session;
+import cuong.run.service.api.APIProductService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -31,23 +33,13 @@ public class AddDatabase {
 	final CustomerRepository customerRepository;
 	final OrderRepository orderRepository;
 
+
 	@PostConstruct
 	public void addAll() {
 		addCategory();
 		addProducts();
 		addCustomer();
 		addOrder();
-		updateOrder(1, 2500);
-		
-	}
-	
-	
-	public void updateOrder(int start, int end) {
-		for(int i=start;i<=end;i++) {
-			Orders orders = orderRepository.findById(i).get();
-			orders.setUpdateStatus(status(orders));
-			orderRepository.save(orders);
-		}
 	}
 	
 	public List<UpdateStatus> status(Orders orders) {
@@ -129,6 +121,7 @@ public class AddDatabase {
 			Map<Integer,OrdersItems> orderItems = addOrderItems(orders);
 			orders.setOrderItems(new ArrayList<>(orderItems.values()));
 			orders.setTotalAmount(totalAmount(orderItems));
+			orders.setUpdateStatus(status(orders));
 			
 			datetime = datetime.plusHours(random.nextInt(14)+1);
 			orders.setOrderDate(datetime);

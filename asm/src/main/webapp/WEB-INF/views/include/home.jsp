@@ -38,7 +38,7 @@
 <div class="row">
 	<div class="col-6 offset-4">
 		<button class="btn btn-primary"
-			onclick="xem(1,this,'/store/product/view/date','homeSortDate',3)">Xem
+			onclick="xem(1,this,'/store/api/product/view/date','homeSortDate',3)">Xem
 			thêm</button>
 	</div>
 </div>
@@ -79,7 +79,7 @@
 <div class="row">
 	<div class="col-6 offset-4">
 		<button class="btn btn-primary"
-			onclick="xem(1,this,'/store/product/view/price','homeSortPrice',3)">Xem
+			onclick="xem(1,this,'/store/api/product/view/price','homeSortPrice',3)">Xem
 			thêm</button>
 	</div>
 </div>

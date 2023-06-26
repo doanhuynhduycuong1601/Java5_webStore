@@ -32,6 +32,7 @@ public class ManagerProductController {
 	private String edit(@PathVariable("id") Optional<Integer> id, Model model) {
 		return managerProductService.edit(model, id.orElse(0));
 	}
+	
 
 	@PostMapping("/update")
 	private String update(@Valid @ModelAttribute("product") ManagerProductPojo product, BindingResult result,

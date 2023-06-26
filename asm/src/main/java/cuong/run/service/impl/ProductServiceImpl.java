@@ -1,8 +1,6 @@
 package cuong.run.service.impl;
 
-import java.util.Optional;
 import org.springframework.stereotype.Service;
-import cuong.run.model.Product;
 import cuong.run.repository.ProductRepository;
 import cuong.run.service.Param;
 import cuong.run.service.ProductService;
@@ -10,7 +8,6 @@ import cuong.run.service.ShoppingCartService;
 import cuong.run.utils.BuilderProduct;
 import cuong.run.web.request.ReqCart;
 import cuong.run.web.response.CartResponse;
-import cuong.run.web.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 
 
@@ -47,15 +44,6 @@ public class ProductServiceImpl implements ProductService {
 				.quantity(quantity)
 				.getCount(count)
 				.build();
-	}
-	@Override
-	public ProductResponse toProductResponse() {
-		Integer id = param.getInt("id", 0);
-		Optional<Product> product = productRepository.findById(id);
-		if(product.isPresent()) {
-			return builderProduct.toProductResponse(product.get());
-		}
-		return null;
 	}
 	
 	

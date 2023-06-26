@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cuong.run.service.ManagerHistoryService;
@@ -150,14 +151,14 @@ public class ManagerHistoryController {
 
 	@ResponseBody
 	@PostMapping("/remove/one/item")
-	public String removeOneItem() {
-		return managerHistoryService.removeOneItem();
+	public String removeOneItem(@RequestParam("idOrder") int idOrder) {
+		return managerHistoryService.removeOneItem(idOrder);
 	}
 
 	@ResponseBody
 	@PostMapping("/giam/one/item")
-	public String giamOneItem() {
-		return managerHistoryService.giamOneItem();
+	public String giamOneItem(@RequestParam("idOrder") int idOrder) {
+		return managerHistoryService.giamOneItem(idOrder);
 	}
 	
 	@ResponseBody
@@ -166,14 +167,15 @@ public class ManagerHistoryController {
 		return managerHistoryService.requestHoan();
 	}
 	
-	@GetMapping("/hoan/no/{id}")
-	public String noHoan(@PathVariable("id") Integer id) {
-		return managerHistoryService.noHoan(id);
+	
+	@GetMapping("/hoan/no/{id}/{idOrder}")
+	public String noHoan(@PathVariable("id") Integer id,@PathVariable("idOrder") Integer idOrder) {
+		return managerHistoryService.noHoan(id, idOrder);
 	}
 	
-	@GetMapping("/hoan/yes/{id}")
-	public String yesHoan(@PathVariable("id") Integer id) {
-		return managerHistoryService.yesHoan(id);
+	@GetMapping("/hoan/yes/{id}/{idOrder}")
+	public String yesHoan(@PathVariable("id") Integer id,@PathVariable("idOrder") Integer idOrder) {
+		return managerHistoryService.yesHoan(id, idOrder);
 	}
 
 }

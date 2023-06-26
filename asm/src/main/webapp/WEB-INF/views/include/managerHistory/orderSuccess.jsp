@@ -55,7 +55,7 @@
 								data-bs-toggle="collapse"
 								data-bs-target="#showLyDo${list.orderId}" aria-expanded="false"
 								aria-controls="showLyDo${list.orderId}"
-								onclick="lyDo('${list.orderId}','showLyDo${list.orderId}','/store/history/order/cancel')">
+								onclick="lyDo('${list.orderId}','showLyDo${list.orderId}','/store/api/product/order/cancel')">
 								Lý do hủy</button>
 						</div>
 					</c:if>

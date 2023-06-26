@@ -9,6 +9,4 @@ public interface ProductService {
 	CartResponse addCart(ReqCart reqCart);
 	
 	CartResponse update(ReqCart reqCart);
-	
-	ProductResponse toProductResponse();
 }

@@ -2,6 +2,9 @@ package cuong.run.service.impl;
 
 import java.text.DecimalFormat;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -89,7 +92,7 @@ public class ManagerProductServiceImpl implements ManagerProductService {
 	
 	ManagerProductPojo toManagerProductPojo(Product product) {
 		if(product == null) {
-			return null;
+			return new ManagerProductPojo();
 		}
 		return ManagerProductPojo.builder().id(product.getId()).names(product.getNames())
 				.quantity(String.valueOf(product.getQuantity())).dateAt(product.getDateAtt()).img(product.getImg())
@@ -103,6 +106,10 @@ public class ManagerProductServiceImpl implements ManagerProductService {
 	}
 	
 	
+	@Caching(
+		evict = {@CacheEvict(allEntries = true, cacheNames = {"productDate","productPrice","productSearch"}),
+				@CacheEvict(cacheNames = "product", key = "#product.id")}
+	)
 	@Override
 	public String update(ManagerProductPojo product, BindingResult result, Model model, MultipartFile file) {
 		ManagerProductPojo ao = session.get("managerProductEdit");
@@ -130,7 +137,7 @@ public class ManagerProductServiceImpl implements ManagerProductService {
 			return "index";
 		}
 		
-		if(product.getId() == null) {
+		if(product.getId() == null || product.getId() == 0) {
 			Product p = new Product();
 			p.set(product);
 			productRepository.save(p);
