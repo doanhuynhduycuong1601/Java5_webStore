@@ -29,7 +29,7 @@
         	<div class="row mb-4">
         		<i onclick="git()" style="font-size: 30px;" class="fa-brands fa-github col-2"></i>
         		<i onclick="face()" style="font-size: 30px;" class="fa-brands fa-facebook col-2"></i>
-        		<a href="/asm/cv.pdf" class="col-2">CV</a>
+        		<a href="https://drive.google.com/file/d/1k6sDY7pu5BBa_xWdM9yPuQ81iGmP1WJa/view?usp=drive_link" class="col-2">CV</a>
         	</div>
         	<div class="mb-4">
         		<i style="font-size: 20px" class="fa-solid fa-phone"></i>  : 0357846328
